@@ -2,3 +2,4 @@
 .venv_ml
 DataSets/
 强化学习.ipynb
+logs/
