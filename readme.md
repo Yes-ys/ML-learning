@@ -4,3 +4,4 @@
 # 目前已安装的包
 1. pytorch
 2. tensorboard
+3. dl2
