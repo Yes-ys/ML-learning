@@ -1,5 +1,5 @@
 """
-演示trasnform的使用
+演示trasnforms的使用
 """
 
 from PIL import Image

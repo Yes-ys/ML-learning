@@ -22,7 +22,7 @@ class softmax(nn.Module):
         self.train_loader = torch.utils.data.DataLoader(dataset=train_sets,batch_size=64,shuffle=True)
         self.test_loader = torch.utils.data.DataLoader(dataset=test_sets,batch_size=64,shuffle=True)
     def forward(self,input):
-        output = self.flat(input) # 摊平特征变量（28*28->784, size:(64,784)）
+        output = self.flat(input) # 摊平特征变量（28*28->784, size:(64,784)） pytorch中大多数模型都是默认批量处理，第一维度是batch_size
         output = self.linear(output)
         output = self.softmax(output)
         return output
