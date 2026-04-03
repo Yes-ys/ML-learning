@@ -20,7 +20,6 @@ class Net(nn.Module):
         self.flat = nn.Flatten()
         self.f6 = nn.Linear(120,84)
         self.fc = nn.Linear(84,10)
-        self.softmax = nn.Softmax(dim=1)
     def forward(self, input):
         o = self.c1(input)
         o = self.s2(o)
@@ -30,7 +29,7 @@ class Net(nn.Module):
         o = self.flat(o)
         o = self.f6(o)
         o = self.fc(o)
-        return self.softmax(o)
+        return o
 
 def train(net:Net, train_loader:DataLoader, test_loader:DataLoader, epoches:int):
     loss = nn.CrossEntropyLoss()
@@ -50,7 +49,11 @@ def test(net:Net, test_loader:DataLoader, epoch_indx:int):
     correct = 0
     total_loss = 0.0
     net.eval()
-    loss = nn.CrossEntropyLoss()
+    """
+    使用CorssEntropyLoss模型最后一层不加softmax 输出logits分数即可(正常全连接层的输出一般就是未经归一化的logits) 该损失函数内部会做LogSoftmax
+    CorssEntopyLoss对象一般是接收参数 preds (batch_size, num_classes) tragets (num_classes,) 不需要我们手动将preds从所属不同类别的概率向量 转换为标量
+    """
+    loss = nn.CrossEntropyLoss() 
     with torch.no_grad():
         for datas, targets in test_loader:
             total += targets.size(0) # batch_size，统计当前处理了的sample总数
